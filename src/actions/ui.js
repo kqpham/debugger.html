@@ -20,6 +20,8 @@ import type {
   SelectedPrimaryPaneTabType
 } from "../reducers/ui";
 
+let rootLevel = "";
+let rgx;
 export function setContextMenu(type: string, event: any) {
   return ({ dispatch }: ThunkArgs) => {
     dispatch({ type: "SET_CONTEXT_MENU", contextMenu: { type, event } });
@@ -81,7 +83,8 @@ export function showSource(sourceId: string) {
       type: "SHOW_SOURCE",
       sourceUrl: ""
     });
-
+    let rawSrcURL = getRawSourceURL(source.get("url"));
+    rawSrcURL = rootLevel.concat(rawSrcURL);
     dispatch({
       type: "SHOW_SOURCE",
       sourceUrl: getRawSourceURL(source.get("url"))
@@ -175,7 +178,13 @@ export function setProjectDirectoryRoot(newRoot: string) {
       temp.splice(0, 2);
       newRoot = `${curRoot}/${temp.join("/")}`;
     }
-
+    const rgx = newRoot.match(/\//g);
+    const lvlCount = rgx.length;
+    rootLevel = "";
+    for (var i = 0; i < lvlCount; i++) {
+      rootLevel = rootLevel.concat("../");
+    }
+    console.log(rootLevel);
     dispatch({
       type: "SET_PROJECT_DIRECTORY_ROOT",
       url: newRoot
