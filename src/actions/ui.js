@@ -21,7 +21,7 @@ import type {
 } from "../reducers/ui";
 
 let rootLevel = "";
-let rgx;
+
 export function setContextMenu(type: string, event: any) {
   return ({ dispatch }: ThunkArgs) => {
     dispatch({ type: "SET_CONTEXT_MENU", contextMenu: { type, event } });
