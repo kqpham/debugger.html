@@ -87,7 +87,7 @@ export function showSource(sourceId: string) {
     rawSrcURL = rootLevel.concat(rawSrcURL);
     dispatch({
       type: "SHOW_SOURCE",
-      sourceUrl: getRawSourceURL(source.get("url"))
+      sourceUrl: rawSrcURL
     });
   };
 }
@@ -181,7 +181,7 @@ export function setProjectDirectoryRoot(newRoot: string) {
     const rgx = newRoot.match(/\//g);
     const lvlCount = rgx.length;
     rootLevel = "";
-    for (var i = 0; i < lvlCount; i++) {
+    for (let i = 0; i < lvlCount; i++) {
       rootLevel = rootLevel.concat("../");
     }
     console.log(rootLevel);
